@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html><!--
+https://learnblockchain.cn/docs/solidity/types.html#arrays
+https://www.xdaichain.com/for-developers/developer-resources#json-rpc-endpoints
+http://mobileangularui.com/demo/#/scroll
+http://mobileangularui.com/docs/module:mobile-angular-ui/module:core/module:sharedstate/
+-->
+<head>
+  <title>ETLife</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="keywords" content="以太坊,DAPP,游戏,全球第一" />
+  <meta name="theme-color" content="#000000"/>
+  <link rel="icon" rel="apple-touch-icon" sizes="180x180"  type="image/x-icon" href="/static/eticon.jpg">
+  <link rel="icon" type="image/jpg" sizes="32x32" href="/static/eticon.jpg">
+  <link rel="shortcut icon" type='image/jpg' href="/static/eticon.jpg">
+  <link href="/fonts/mobile-angular-ui-base.css" rel="stylesheet">
+  <style>
+    @media (min-width:992px){.col-md-1,.col-md-10,.col-md-11,.col-md-12,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9{float:left}.col-md-12{width:100%}.col-md-11{width:91.66666667%}.col-md-10{width:83.33333333%}.col-md-9{width:75%}.col-md-8{width:66.66666667%}.col-md-7{width:58.33333333%}.col-md-6{width:50%}.col-md-5{width:41.66666667%}.col-md-4{width:33.33333333%}.col-md-3{width:25%}.col-md-2{width:16.66666667%}.col-md-1{width:8.33333333%}.col-md-pull-12{right:100%}.col-md-pull-11{right:91.66666667%}.col-md-pull-10{right:83.33333333%}.col-md-pull-9{right:75%}.col-md-pull-8{right:66.66666667%}.col-md-pull-7{right:58.33333333%}.col-md-pull-6{right:50%}.col-md-pull-5{right:41.66666667%}.col-md-pull-4{right:33.33333333%}.col-md-pull-3{right:25%}.col-md-pull-2{right:16.66666667%}.col-md-pull-1{right:8.33333333%}.col-md-pull-0{right:auto}.col-md-push-12{left:100%}.col-md-push-11{left:91.66666667%}.col-md-push-10{left:83.33333333%}.col-md-push-9{left:75%}.col-md-push-8{left:66.66666667%}.col-md-push-7{left:58.33333333%}.col-md-push-6{left:50%}.col-md-push-5{left:41.66666667%}.col-md-push-4{left:33.33333333%}.col-md-push-3{left:25%}.col-md-push-2{left:16.66666667%}.col-md-push-1{left:8.33333333%}.col-md-push-0{left:auto}.col-md-offset-12{margin-left:100%}.col-md-offset-11{margin-left:91.66666667%}.col-md-offset-10{margin-left:83.33333333%}.col-md-offset-9{margin-left:75%}.col-md-offset-8{margin-left:66.66666667%}.col-md-offset-7{margin-left:58.33333333%}.col-md-offset-6{margin-left:50%}.col-md-offset-5{margin-left:41.66666667%}.col-md-offset-4{margin-left:33.33333333%}.col-md-offset-3{margin-left:25%}.col-md-offset-2{margin-left:16.66666667%}.col-md-offset-1{margin-left:8.33333333%}.col-md-offset-0{margin-left:0%}}@media (min-width:1200px){.col-lg-1,.col-lg-10,.col-lg-11,.col-lg-12,.col-lg-2,.col-lg-3,.col-lg-4,.col-lg-5,.col-lg-6,.col-lg-7,.col-lg-8,.col-lg-9{float:left}.col-lg-12{width:100%}.col-lg-11{width:91.66666667%}.col-lg-10{width:83.33333333%}.col-lg-9{width:75%}.col-lg-8{width:66.66666667%}.col-lg-7{width:58.33333333%}.col-lg-6{width:50%}.col-lg-5{width:41.66666667%}.col-lg-4{width:33.33333333%}.col-lg-3{width:25%}.col-lg-2{width:16.66666667%}.col-lg-1{width:8.33333333%}.col-lg-pull-12{right:100%}.col-lg-pull-11{right:91.66666667%}.col-lg-pull-10{right:83.33333333%}.col-lg-pull-9{right:75%}.col-lg-pull-8{right:66.66666667%}.col-lg-pull-7{right:58.33333333%}.col-lg-pull-6{right:50%}.col-lg-pull-5{right:41.66666667%}.col-lg-pull-4{right:33.33333333%}.col-lg-pull-3{right:25%}.col-lg-pull-2{right:16.66666667%}.col-lg-pull-1{right:8.33333333%}.col-lg-pull-0{right:auto}.col-lg-push-12{left:100%}.col-lg-push-11{left:91.66666667%}.col-lg-push-10{left:83.33333333%}.col-lg-push-9{left:75%}.col-lg-push-8{left:66.66666667%}.col-lg-push-7{left:58.33333333%}.col-lg-push-6{left:50%}.col-lg-push-5{left:41.66666667%}.col-lg-push-4{left:33.33333333%}.col-lg-push-3{left:25%}.col-lg-push-2{left:16.66666667%}.col-lg-push-1{left:8.33333333%}.col-lg-push-0{left:auto}.col-lg-offset-12{margin-left:100%}.col-lg-offset-11{margin-left:91.66666667%}.col-lg-offset-10{margin-left:83.33333333%}.col-lg-offset-9{margin-left:75%}.col-lg-offset-8{margin-left:66.66666667%}.col-lg-offset-7{margin-left:58.33333333%}.col-lg-offset-6{margin-left:50%}.col-lg-offset-5{margin-left:41.66666667%}.col-lg-offset-4{margin-left:33.33333333%}.col-lg-offset-3{margin-left:25%}.col-lg-offset-2{margin-left:16.66666667%}.col-lg-offset-1{margin-left:8.33333333%}.col-lg-offset-0{margin-left:0%}}.breadcrumb{padding:8px 15px;margin-bottom:20px;list-style:none;background-color:#f5f5f5;border-radius:4px}.breadcrumb>li,.pagination{display:inline-block}.breadcrumb>li+li:before{content:"/\00a0";padding:0 5px;color:#ccc}.breadcrumb>.active{color:#777}.pagination{padding-left:0;margin:20px 0;border-radius:4px}.pagination>li{display:inline}.pagination>li>a,.pagination>li>span{position:relative;float:left;padding:6px 12px;line-height:1.42857143;text-decoration:none;color:#007aff;background-color:#fff;border:1px solid #ddd;margin-left:-1px}.pagination>li:first-child>a,.pagination>li:first-child>span{margin-left:0;border-bottom-left-radius:4px;border-top-left-radius:4px}.pagination>li:last-child>a,.pagination>li:last-child>span{border-bottom-right-radius:4px;border-top-right-radius:4px}.pagination>li>a:focus,.pagination>li>a:hover,.pagination>li>span:focus,.pagination>li>span:hover{z-index:2;color:#0055b3;background-color:#eee;border-color:#ddd}.pagination>.active>a,.pagination>.active>a:focus,.pagination>.active>a:hover,.pagination>.active>span,.pagination>.active>span:focus,.pagination>.active>span:hover{z-index:3;color:#fff;background-color:#007aff;border-color:#007aff;cursor:default}.pagination>.disabled>a,.pagination>.disabled>a:focus,.pagination>.disabled>a:hover,.pagination>.disabled>span,.pagination>.disabled>span:focus,.pagination>.disabled>span:hover{color:#777;background-color:#fff;border-color:#ddd;cursor:not-allowed}.pagination-lg>li>a,.pagination-lg>li>span{padding:10px 16px;font-size:18px;line-height:1.3333333}.pagination-lg>li:first-child>a,.pagination-lg>li:first-child>span{border-bottom-left-radius:6px;border-top-left-radius:6px}.pagination-lg>li:last-child>a,.pagination-lg>li:last-child>span{border-bottom-right-radius:6px;border-top-right-radius:6px}.pagination-sm>li>a,.pagination-sm>li>span{padding:5px 10px;font-size:12px;line-height:1.5}.pagination-sm>li:first-child>a,.pagination-sm>li:first-child>span{border-bottom-left-radius:3px;border-top-left-radius:3px}.pagination-sm>li:last-child>a,.pagination-sm>li:last-child>span{border-bottom-right-radius:3px;border-top-right-radius:3px}.jumbotron{padding-top:30px;padding-bottom:30px;margin-bottom:30px;background-color:#eee}.jumbotron,.jumbotron .h1,.jumbotron h1{color:inherit}.jumbotron p{margin-bottom:15px;font-size:21px;font-weight:200}.jumbotron>hr{border-top-color:#d5d5d5}.container .jumbotron,.container-fluid .jumbotron{border-radius:6px;padding-left:15px;padding-right:15px}.jumbotron .container{max-width:100%}@media screen and (min-width:768px){.jumbotron{padding-top:48px;padding-bottom:48px}.container .jumbotron,.container-fluid .jumbotron{padding-left:60px;padding-right:60px}.jumbotron .h1,.jumbotron h1{font-size:63px}}@media (min-width:992px){.sidebar{pointer-events:auto}.sidebar-toggle{display:none}.navbar-brand-center{text-align:left;width:auto;float:left;position:relative}.sidebar-left,.sidebar-right{display:block;left:0;width:300px}.sidebar-right{right:0;left:auto}.has-sidebar-left .app,.sidebar-left-in .app,.sidebar-left-in .sidebar-right,.sidebar-right-in .app,.sidebar-right-in .sidebar-left{-webkit-transform:translate3d(0,0,0)!important;-moz-transform:translate3d(0,0,0)!important;transform:translate3d(0,0,0)!important}.has-sidebar-left .app,.sidebar-left-in .app,.sidebar-right-in .app{width:auto;position:relative;-webkit-transition:-webkit-transform 0 ease;-moz-transition:-moz-transform 0 ease;transition:transform 0 ease}.has-sidebar-left .app,.sidebar-left-in .app{margin-left:300px;left:0}.sidebar-right-in .app{margin-right:300px;right:0}}@media (min-width:1200px){.sidebar-left,.sidebar-right{width:320px}.has-sidebar-left .app,.sidebar-left-in .app{margin-left:320px}.sidebar-right-in .app{margin-right:320px}}
+    [ng-cloak] {display: none;}
+    .up_add {
+      width: 153px;
+      height: 43px;
+      opacity: 0;
+    }
+    .up_add_bg {
+      width:153px;
+      height:43px;
+      background-image: url("/static/upload.png");
+    }
+    .container{
+      display:grid;
+      grid-template-columns: 100px auto;
+      grid-template-rows: auto;
+      grid-template-areas: "sidebar main";
+    }
+    .item-a{
+        grid-area:sidebar;
+    }
+    .item-b{
+        grid-area:main;
+    }    
+    .ds-avatar{   
+    width:46px;
+    height:46px;   
+    border-radius: 7px;  
+    -webkit-border-radius: 7px; 
+    -moz-border-radius:7px;   
+    box-shadow: inset 0 -1px 0 #3333sf; 
+    -webkit-box-shadow: inset 0 -1px 0 #3333sf;   
+    -webkit-transition: 0.4s;      
+    -webkit-transition: -webkit-transform 0.4s ease-out;   
+    transition: transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out;   
+    }
+    .sideIcon{
+      width:30px;
+      height: 30px;
+    }
+</style>
+</head>
+<body> 
+  <div id="flashscreen" style="width:300px;height:80px;position:absolute;top:30%;left:60px;">
+      ETLife启动中，正在下载Web3.js，Angularjs.min.js等约2M资源。<br/>
+      在这个新世界里，你付出的所有的时间、热情，都会成为你真正的财富。<br/>
+      产生的价值将推动区块链不断升值。<br/>
+      <br/>
+      创世者：刘小斌，2008-2021。
+  </div>
+  <div ui-yield-to ="modals"></div>
+  <div ng-controller="indexCtrl as yb" ng-cloak style="height:100%;background: white">
+    <div class="sidebar sidebar-left">      
+    <div class="scrollable">
+      <h1 class="scrollable-header app-name">永恒世界</h1>  
+      <div class="scrollable-content">
+        <div class="list-group" ui-turn-off='uiSidebarLeft'>
+          <a class="list-group-item" href="/index">
+            <img ng-src="/static/home1.jpg"  class="sideIcon" /> 
+            Home <i class="fa fa-chevron-right pull-right"></i>
+          </a>
+        </div>        
+        <div class="panel-group" ui-state="myAccordion" ui-default="1"> 
+          <div class="panel panel-default" ng-if='!(yb.cards!="" && yb.showloading==false)'>
+            <div class="panel-heading" ui-set="{'myAccordion':4}">
+              <h4 class="panel-title"><img ng-src="/static/createlife1.jpg" class="sideIcon" /> Create</h4>
+            </div>
+            <div ui-if="myAccordion==4">
+              <div class="panel-body">
+                  <input type="text" style="width:100%" ng-model="yb.nameInput" required placeholder="introduce your photo" />
+                  <p>
+                  <input type="checkbox" ng-model="yb.setasavatar"/>文字当昵称图片当头像<br/>
+                  <input type="checkbox" ng-model="yb.setpublic"/>显示在首页<br/>
+                  <input type="checkbox" ng-model="yb.setprice"/>收费项目
+                  </p>
+                  <div class="up_add_bg pull-right"> 
+                    <input type="file" class="up_add" onchange="angular.element(this).scope().yb.uploadfile(event.target.files[0],event.target.id);" value="New Life"/>
+                  </div>
+              </div>
+            </div>
+          </div>   
+          <div class="panel panel-default" ng-if='!(yb.cards!="" && yb.showloading==false)'>
+            <div class="panel-heading" ui-set="{'myAccordion': 3}">        
+              <h4 class="panel-title">
+                <img ng-src="/static/game.jpg" class="sideIcon"/> Game
+              </h4>
+            </div>
+            <div ui-if="myAccordion == 3">
+              <div class="panel-body">
+                <div ng-show="yb.objects.length==0 && yb.showloading==false">
+                  <h4 class="section section-info">这个小宇宙里什么都没有</h4>
+                </div>
+                <img ng-repeat="(index,item) in yb.objects | orderBy:'-id'" ui-turn-on="dlgEditObject" ng-click="yb.showObject(item.objectid)" ng-src="/static/{{item.classid}}{{item.grade}}.png" class="ds-avatar"/>
+                <div ui-content-for="modals">
+                  <div class="modal" ui-if='dlgEditObject' ui-shared-state='dlgEditObject'>
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button class="close" ui-turn-off="dlgEditObject">&times;</button>
+                          <h4 class="modal-title">You selected this object:</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>This is object {{yb.selectedobject.objectid}}<img ng-src="/static/{{yb.selectedobject.classid}}{{yb.selectedobject.grade}}.png" class="ds-avatar"/></p>
+                          price is {{yb.selectedobject.price}}
+                          <br/>grade is {{yb.selectedobject.grade}}
+                          <br/>set a price:<input type="text" ng-model="yb.newprice"/> <button ng-click="yb.setNewPrice()">set price</button>
+                          <br/>or you can sell it<button ng-click="yb.sellselectedObject()">sell</button>
+                        </div>
+                        <div class="modal-footer">
+                          <button ui-turn-off="dlgEditObject" class="btn btn-default">Close</button>
+                        </div>    
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading" ui-set="{'myAccordion': 2}">        
+              <h4 class="panel-title">
+                  <img ng-src="/static/bonus.png" class="sideIcon"/> Wallet/xDai({{((yb.ethBalance)/(yb.Config.baseunit*1000))|number:4}}$)
+              </h4>
+            </div>
+            <div ui-if="myAccordion ==2">
+              <div class="panel-body">
+                <div class="list-group">
+                  <a class="list-group-item media" ng-click='yb.withdraw()'>
+                    <div class="media-body">
+                      <h5 class="media-heading" >代管余额</h5>
+                      <small>
+                      <span class="label label-default" style="word-wrap: break-word;">
+                      <i>{{((yb.etBalance)/(yb.Config.baseunit*1000)) |number:3}}$</i></span></small>
+                    </div>
+                  </a>
+                  <a class="list-group-item media" >
+                    <div class="media-body">
+                      <h5 class="media-heading">游戏代币</h5>
+                      <small><span class="label label-default" style="word-wrap: break-word;">
+                      <i>{{yb.usertoken}}</i></span></small>
+                    </div>
+                  </a>
+                  <div class="list-group-item media">
+                    xDai地址/私钥
+                    <pre>{{yb.ethAddress}} 
+  {{yb.ethAddressPrivkey}}</pre>
+                    <p>私钥不会上传到网络，您可以放心使用(xDai是ETH的一个侧链，可以通过ETH兑换xDai)</p>
+                    <input type="text" style="width:100%;" ng-model="yb.password" placeholder="输入新私钥" />
+                  </div>
+                </div>
+                <button class="btn btn-default pull-right" ng-click="yb.login()">更换身份</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading" ui-set="{'myAccordion': 1}">        
+              <h4 class="panel-title">
+                  <img ng-src="/static/eticon.jpg" class="sideIcon"/> About
+              </h4>
+            </div>
+            <div ui-if="myAccordion == 1">
+              <div class="panel-body">
+                <p>
+                ETLife是一个新的区块链世界，你们快来创造数字资源："Life" 。你付出的所有的时间、热情，都会成为你真正的财富，暂时保存在智能合约里。
+                </p><p>
+                推荐赚钱：在vip life里面点击Talk按钮，宣布你关注了这个Life，然后你把你的链接发送给你的朋友，当你的
+                朋友点击了宝石按钮，智能合约会从vip life里扣除0.1xDai给你的朋友，0.2xDai给你，智能合约收取0.1xDai服务费。
+                </p><p>
+                卖照片赚钱：发布有价值的照片时，勾选付费项目让想看
+                完整内容的有钱人付费观看，智能合约收取服务手续费。
+                </p>      
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="app" ng-cloak>
+      <div class="navbar navbar-app navbar-absolute-top">
+        <div class="btn-group pull-left"><img class="ds-avatar" ui-toggle='uiSidebarLeft' ng-src="/static/eticon.jpg"/></div>
+        <div class="navbar-brand">{{yb.txStatus}}</div>
+        <div class="btn-group pull-right">
+          <img ng-show='yb.cards!="" && yb.showloading==false'  ng-src="/static/footprint.jpg" class="ds-avatar" ng-click='yb.goto("/welcome")'/>
+          <img ng-src="/static/loading.gif" class="ds-avatar" ng-if="yb.showloading==true"/>
+          <img ng-if='yb.cards=="" && yb.showloading==false' ng-src="{{yb.Config.ipfsURL}}/{{yb.userAvatar}}" class="ds-avatar" ng-click='yb.goto("/user")'/>
+        </div>
+      </div>
+      <div class="app-body"><div class="app-content"> <ng-view></ng-view> </div></div>
+    </div>
+  </div>
+</body>
+</html>
+<script src="/fonts/angular.min.js"></script>
+<script src="/fonts/angular-route.min.js"></script>
+<script src="/fonts/mobile-angular-ui.min.js"></script>
+<script src="/fonts/web3.min.js"></script>
+<script src="/config.js"></script>
+<script src="/service.js"></script>
+<script src="/list.js"></script>
+<script src="/life.js"></script>
+<script src="/index.js"></script>

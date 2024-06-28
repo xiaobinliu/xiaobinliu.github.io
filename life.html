@@ -1,0 +1,80 @@
+<div class="scrollable">
+  <div class="scrollable-content"> 
+    <div class="section" style="position:relative">
+      <ui-shared-state id='activeTab' default='1'></ui-shared-state>
+      <ul class="nav nav-tabs">
+        <li ui-class="{'active': activeTab == 1}"><a ui-set="{'activeTab': 1}">Life #{{yb.thisLife.id}} </a></li>
+        <li ui-class="{'active': activeTab == 2}"><a ui-set="{'activeTab': 2}">Talks</a></li>
+        <li ui-class="{'active': activeTab == 3}"><a ui-set="{'activeTab': 3}">Objects</a></li>
+      </ul>
+      <div ui-if="activeTab == 1">
+        <h3 class="page-header" align="center">
+          <div class="btn-group">
+            <a ui-turn-on='mnuLife' class='btn'><img class="ds-avatar" ng-src="{{yb.Config.ipfsURL}}/{{yb.userAvatar}}"/>
+            </a>
+            <ul class="dropdown-menu" ui-outer-click="Ui.turnOff('mnuLife')" ui-outer-click-if="Ui.active('mnuLife')"
+              role="menu" ui-show="mnuLife" ui-state="mnuLife" ui-turn-off="mnuLife">
+              <li><a href="/user/{{yb.thisLife._owner}}">查看用户</a></li>
+              <li ng-if="yb.thisLife._ivebaughtit==false && yb.thisLife._price>0" ><a href="" ng-click="yb.lifeBuy(yb.thisLife.id,yb.thisLife._price);">价格:{{((yb.thisLife._price)/(yb.Config.baseunit*1000))|number:2}}$，购买完整版</a></li>
+              <li ng-if="yb.thisLife._forwardfee>0"><a href="">广告费余额：{{((yb.thisLife._forwardfee)/(yb.Config.baseunit*1000))|number:2}}$</a></li>
+            </ul>
+          </div>
+        </h3>
+        <h4 class="section-info">“{{yb.thisLife._name}}”</h4>      
+        <div align="center">
+          <a href="{{yb.Config.ipfsURL}}/{{yb.thisLife._bigphotoUrl}}" target="_blank">
+            <img  ng-src ='{{yb.Config.ipfsURL}}/{{yb.thisLife._bigphotoUrl=="" ? yb.thisLife.photoUrl : yb.thisLife._bigphotoUrl}}'/>
+          </a>
+        </div>  
+      </div>
+      <div ui-if="activeTab == 2">
+        <h3 class="page-header" align="center">
+          <input type="text" ng-model="yb.talkInput" required placeholder="talk something" />
+          <!--p><input type="checkbox" ng-model="yb.setForward"/>转发到朋友圈</p-->
+          <a href="" class="btn btn-default" ng-click="yb.talkOnLife(yb.thisLife.id)">Talk</a>
+        </h3>
+        <div class="container" ng-repeat="(index,item) in yb.talks | orderBy:'-id'" >
+          <div class="item item-a"><img ng-src="{{yb.Config.ipfsURL}}/{{item.avatar}}" class="ds-avatar" adlt="{{item._fromuser}}"/></div>
+          <div class="item item-b"><a href="/user/{{item._fromuser}}">{{item._text}}</a></div>
+        </div>
+      </div>
+      <div ui-if="activeTab == 3">
+        <h3 class="page-header" align="center">
+          <a href="" ui-turn-on="modal2" class="btn btn-default" ng-click="yb.setObject1()">Set Object</a>
+          <a href="" class="btn btn-default" ng-click="yb.saveGameState(yb.thisLife.id)">Gather tokens</a>
+        </h3>
+        <div class="container" ng-repeat="(index,item) in yb.objects | orderBy:'-id'">
+          <div class="item item-a"><img class="ds-avatar" ng-src="/static/{{item.classid}}{{item.grade}}.png"/></div>
+          <div class="item item-b">{{item.producted | number:0}}<br/>
+            <button ng-if="item.price>0" ng-click="yb.buyObject(yb.thisLife.id,item.objectid)">Buy</button>
+          </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<div ui-content-for="modals">
+  <div class="modal" ui-if='modal2' ui-shared-state='modal2'>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" ui-turn-off="modal2">&times;</button>
+          <h4 class="modal-title">Select object</h4>
+        </div>
+        <div class="modal-body">
+          <p>选择一个Object,选中的Object将被放置到当前Life,并产生收益。
+            <div ng-repeat="(index,item) in yb.userobjects | orderBy:'-id'">
+              <input  type="radio" ng-model="yb.selectedobject" value="{{item.objectid}}"/>
+              <img class="ds-avatar" ng-src="/static/{{item.classid}}{{item.grade}}.png"/>{{item.timestamp}}
+            </div>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button ui-turn-off="modal2" class="btn btn-default">Close</button>
+          <button ui-turn-off="modal2" ng-click="yb.setObject2()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

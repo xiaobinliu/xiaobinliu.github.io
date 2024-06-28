@@ -1,0 +1,119 @@
+<div class="scrollable">
+  <div class="scrollable-content" > 
+    <div class="section" style="position:relative">
+<ui-shared-state id='activeTab' default='1'></ui-shared-state>
+      <div style='background-image: url("/static/user.jpg");height:213px ;background-repeat:no-repeat;background-size: 100% 100%;' ng-if="yb.panel==0 || yb.panel==3" align="center">
+        <img style="width:48px;
+    height:48px;   
+    border-radius: 7px;  
+    -webkit-border-radius: 7px; 
+    -moz-border-radius:7px;   
+    box-shadow: 5px 5px 5px #ffffff; 
+    -webkit-box-shadow: inset 0 -1px 0 #3333sf;   
+    -webkit-transition: 0.4s;      
+    -webkit-transition: -webkit-transform 0.4s ease-out;   
+    transition: transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out;   position:relative;
+top:80px" ng-src="{{yb.Config.ipfsURL}}/{{yb.userAvatar}}"/>
+      </div>
+      <div ng-if="yb.panel==0 || yb.panel==3" class="page-header">
+      
+      <ul class="nav nav-tabs">
+        <li ui-class="{'active': activeTab == 1}"><a ui-set="{'activeTab': 1}">User</a></li>
+        <li ui-class="{'active': activeTab == 2}"><a ui-set="{'activeTab': 2}">Forward</a></li>
+        <li ng-if="yb.panel==0" ui-class="{'active': activeTab == 3}"><a ui-set="{'activeTab': 3}">Favorite</a></li>
+      </ul>
+    </div>
+      
+    <h4 class="section section-info" ng-if="yb.showloading==true" >正在查询智能合约</h4>
+      <h4 class="section section-info" ng-if="(yb.activelifees(activeTab).length==0 || yb.activelifees(activeTab).length==undefined) && yb.showloading==false">这个小宇宙里什么都没有</h4>
+      <div class="section" ng-if="yb.activelifees(activeTab).length==0 && yb.showloading==false && yb.panel==0 && yb.activeTab==1">
+        <p>上传头像，起个昵称：</p>
+        <p>
+          <input type="text" style="width:100%" ng-model="yb.nameInput" required maxlength="70" placeholder="input your nickname here" />
+        </p>
+        <div class="up_add_bg">
+          <input type="file" class="up_add" onchange="angular.element(this).scope().yb.uploadfile(event.target.files[0],event.target.id)" value="New Life"/>
+        </div>
+      </div>
+      <div class="panel panel-default" ng-repeat="(index,item) in yb.activelifees(activeTab) | orderBy:'-id'" >
+        <div class="panel-heading">
+          <div class="btn-group pull-right">
+            <a ui-turn-on="myDropdown{{item.id}}" class="btn"><i class="fa fa-ellipsis-v"></i></a>
+              <ul 
+                ui-shared-state="myDropdown{{item.id}}"
+                class="dropdown-menu" role="menu"
+                ui-outer-click="Ui.turnOff('myDropdown' + item.id)"
+                ui-outer-click-if="Ui.active('myDropdown' + item.id)"
+                ui-show="myDropdown{{item.id}}"
+                ui-turn-off="myDropdown{{item.id}}">
+                <li ng-if="yb.panel==0 && yb.activeTab==1"><a ui-turn-on="dlgSetAsVip" ng-click="yb.setForwardFee(item.id)">Vip fee:约{{((item._forwardfee)/(yb.Config.baseunit*1000)) | number:2}}D 加钱上首页</a></li>
+                <li ng-if="yb.panel==0 && yb.activeTab==1"><a ui-turn-on="dlgSetPrice" ng-click="yb.setPrice(item.id)">Price:约{{((item._price)/(yb.Config.baseunit*1000))|number:2}}D 设为有价life</a></li>
+                <li ng-if="yb.panel==0 && yb.activeTab==1"><a ng-click="yb.deleteLife(item.id)">Delete</a></li>
+
+                <li ng-if="(yb.panel==2 || yb.panel==3) && (item._ivebaughtit==false && item._price>0 &&item.showbuybutton)  && yb.isguest=='false' "><a  ng-click="yb.lifeBuy(item.id,item._price);">Buy price:{{((item._price)/(yb.Config.baseunit*1000))|number:2}}D</a></li>
+                <li ng-if="(yb.panel==2 || yb.panel==3) && (item._ivebaughtit==true)"><a href="{{yb.Config.ipfsURL}}/{{item._bigphotoUrl}}" target="_blank" >Detail photo</a></li>
+                <li ng-if="item._forwardfee>0 && yb.panel==3 && (item._ivefollowit==false && item._owner!=yb.localaddress && yb.localaddress!=yb.userid)"><a  ng-click="yb.setBalance(item.id)" ><img style="width:20px;" ng-src="/static/bonus.png"/></a></li>
+                <li><a href="/user/{{item._owner}}">User</a></li>
+              </ul>
+          </div>
+          <h3 class="panel-title">life #{{item.id}}</h3>
+        </div>
+        <div class="panel-body container">
+          <div class="item item-a">
+            <img ng-src ='{{yb.Config.ipfsURL}}/{{item._photoUrl=="" ? yb.Config.defaultAvatar : item._photoUrl}}'/>
+          </div>
+          <a href="/life/{{item.id}}" class="item item-b" style="height:100px">
+            <div style="width:100%;height:30px; z-index:1">
+              {{item._name}}
+            </div>
+          </a>        
+        </div>
+      </div>
+
+    
+
+
+
+      <div ui-content-for="modals">
+        <div class="modal" ui-if='dlgSetAsVip' ui-shared-state='dlgSetAsVip'>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button class="close" ui-turn-off="dlgSetAsVip">&times;</button>
+                <h4 class="modal-title">请设定金额:</h4>
+              </div>
+              <div class="modal-body">
+              将从你的账户扣除以下xDai，系统将把你的Life展示在首页
+              请设定金额:(单位xDai=1$)<input  type="text" ng-model="yb.inputpinfee" maxlength="6" size="7" placeholder="100" />D
+              </div> 
+              <div class="modal-footer">
+                <button ui-turn-off="dlgSetAsVip" class="btn btn-primary" ng-click="yb.setForwardFee2()">确定</button>
+                <button ui-turn-off="dlgSetAsVip" class="btn btn-default">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal" ui-if='dlgSetPrice' ui-shared-state='dlgSetPrice'>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button class="close" ui-turn-off="dlgSetPrice">&times;</button>
+                <h4 class="modal-title">请设定金额:</h4>
+              </div>
+              <div class="modal-body">
+                出个价吧，只有购买了你的Life以后，才可以看到完整内容
+                请设定金额(单位xDai=1$):<input  type="text" ng-model="yb.inputpricefee" maxlength="6" size="7" placeholder="100" />D      
+              </div> 
+              <div class="modal-footer">
+                <button ui-turn-off="dlgSetPrice" class="btn btn-primary" ng-click="yb.setPrice2()">确定</button>
+                <button ui-turn-off="dlgSetPrice" class="btn btn-default">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

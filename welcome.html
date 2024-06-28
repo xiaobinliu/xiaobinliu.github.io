@@ -1,0 +1,15 @@
+<div class="scrollable">
+  <div class="scrollable-content"> 
+  	<div class="section" style="position:relative">
+		<p>Welcome:</p><div ng-if="yb.ethBalance==0">
+      	<p>亲爱的新用户，这是您第一次使用ETLife</p>
+        <p>您的区块链账户地址是：{{yb.ethAddress}}。</p>
+        
+          <p>现在您一无所有，点击<a ng-click="yb.getFirst()">确认</a>您希望探索新世界，智能合约将送您0.002xDai的启动资金。</p>
+        </div>
+        <div ng-if="yb.ethBalance!=0">
+          已经踏入ETLife的世界，获得第一桶金。到处查看一下吧。
+        </div>
+    </div>
+  </div>
+</div>
